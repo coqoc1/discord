@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Discord · Log in</title>
+  <title>Discord · Log in with passkey</title>
   <style>
-    /* ===== RESET & GLOBAL ===== */
+    /* ----- reset & base (same as original Dutch version) ----- */
     * {
       margin: 0;
       padding: 0;
@@ -22,11 +22,11 @@
       padding: 1.5rem;
     }
 
-    /* main card – exact Discord modal style */
+    /* login card — exact Discord style */
     .login-card {
       max-width: 480px;
       width: 100%;
-      background: #2b2d31;           /* card background */
+      background: #2b2d31;
       border-radius: 1rem;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
       padding: 2rem 1.8rem 2.2rem 1.8rem;
@@ -85,12 +85,12 @@
       box-shadow: 0 0 0 1px #5865f2;
     }
 
-    /* no placeholder text — matches original image */
+    /* no placeholder text — exactly like the image */
     .input-field::placeholder {
       color: transparent;
     }
 
-    /* forgot password row */
+    /* forgot password link */
     .forgot-row {
       text-align: right;
       margin-top: -0.25rem;
@@ -109,7 +109,7 @@
       color: #40b6ff;
     }
 
-    /* login button */
+    /* primary login button */
     .login-btn {
       background-color: #5865f2;
       border: none;
@@ -122,38 +122,20 @@
       font-family: inherit;
       cursor: pointer;
       transition: background 0.2s;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
     }
 
     .login-btn:hover {
       background-color: #4752c4;
     }
 
-    /* register row */
-    .register-row {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #b5bac1;
-      margin-bottom: 1.8rem;
-    }
-
-    .register-link {
-      color: #00a8fc;
-      text-decoration: none;
-      font-weight: 500;
-      margin-left: 0.25rem;
-    }
-
-    .register-link:hover {
-      text-decoration: underline;
-    }
-
-    /* QR divider — exactly as in the picture */
-    .qr-divider {
+    /* "OR" divider — exactly as in the screenshot */
+    .divider {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      margin: 1.8rem 0 1.2rem 0;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
     }
 
     .divider-line {
@@ -162,75 +144,39 @@
       background-color: #3c3f45;
     }
 
-    .qr-title {
-      font-size: 0.85rem;
+    .divider-text {
+      color: #b5bac1;
+      font-size: 0.8rem;
       font-weight: 600;
       text-transform: uppercase;
-      color: #b5bac1;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.3px;
     }
 
-    /* QR method block — background, padding, layout */
-    .qr-method {
-      text-align: center;
-      background: #232428;
-      border-radius: 0.75rem;
-      padding: 1rem 1rem 1.2rem 1rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .fake-qr-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 0.9rem;
-    }
-
-    /* authentic-looking fake QR code (matches Discord’s style) */
-    .fake-qr {
-      width: 112px;
-      height: 112px;
-      background: white;
-      border-radius: 8px;
-      padding: 6px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      display: block;
-    }
-
-    .qr-instruction {
+    /* passkey button — secondary style (border, dark background) */
+    .passkey-btn {
+      background-color: transparent;
+      border: 1px solid #3c3f45;
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 0.5rem;
       font-weight: 500;
-      color: #e1e4e8;
-      font-size: 0.95rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .qr-desc {
-      font-size: 0.8rem;
-      color: #9aa1a8;
-    }
-
-    /* "Or sign in with a code" link */
-    .code-alternative {
-      text-align: center;
-      margin-top: 0.5rem;
-    }
-
-    .code-link {
-      background: none;
-      border: none;
-      color: #00a8fc;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
+      font-size: 1rem;
+      color: white;
       font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
 
-    .code-link:hover {
-      text-decoration: underline;
+    .passkey-btn:hover {
+      background-color: #2b2d31;
+      border-color: #5865f2;
     }
 
-    /* mobile adjustments — keep proportions exactly */
+    /* mobile optimization */
     @media (max-width: 500px) {
       .login-card {
         padding: 1.6rem;
@@ -238,32 +184,27 @@
       .welcome-title {
         font-size: 1.6rem;
       }
-      .fake-qr {
-        width: 96px;
-        height: 96px;
-      }
     }
 
-    /* all interactive elements keep default pointer */
-    a, .code-link, .login-btn {
+    button, a {
       cursor: pointer;
     }
   </style>
 </head>
 <body>
 <div class="login-card">
-  <!-- heading — english version of the original -->
+  <!-- exact titles as in the original, but in English -->
   <h1 class="welcome-title">Welcome back!</h1>
   <p class="welcome-sub">We're very happy to see you again!</p>
 
-  <!-- login form -->
+  <!-- login form (no action, exact replica) -->
   <form action="#" method="post">
     <div class="input-group">
-      <label for="emailPhone">Email or phone number *</label>
+      <label for="emailPhone">Email or phone number</label>
       <input type="text" id="emailPhone" class="input-field" value="" autocomplete="off">
     </div>
     <div class="input-group">
-      <label for="password">Password *</label>
+      <label for="password">Password</label>
       <input type="password" id="password" class="input-field" value="" autocomplete="off">
     </div>
     <div class="forgot-row">
@@ -272,139 +213,41 @@
     <button type="submit" class="login-btn">Log in</button>
   </form>
 
-  <!-- register text -->
-  <div class="register-row">
-    Need an account?
-    <a href="#" class="register-link">Register</a>
-  </div>
-
-  <!-- QR code section — identical divider + block as in the picture -->
-  <div class="qr-divider">
+  <!-- "OR" divider -->
+  <div class="divider">
     <div class="divider-line"></div>
-    <span class="qr-title">Log in with QR code</span>
+    <span class="divider-text">OR</span>
     <div class="divider-line"></div>
   </div>
 
-  <div class="qr-method">
-    <div class="fake-qr-container">
-      <!-- Fake QR code that looks exactly like a real Discord login QR (pattern, markers, timing) -->
-      <svg class="fake-qr" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- quiet zone implicitly white -->
-        <!-- position markers (large squares) -->
-        <rect x="4" y="4" width="24" height="24" fill="black" rx="2" />
-        <rect x="8" y="8" width="16" height="16" fill="white" rx="1" />
-        <rect x="12" y="12" width="8" height="8" fill="black" rx="1" />
-        <!-- top-right -->
-        <rect x="72" y="4" width="24" height="24" fill="black" rx="2" />
-        <rect x="76" y="8" width="16" height="16" fill="white" rx="1" />
-        <rect x="80" y="12" width="8" height="8" fill="black" rx="1" />
-        <!-- bottom-left -->
-        <rect x="4" y="72" width="24" height="24" fill="black" rx="2" />
-        <rect x="8" y="76" width="16" height="16" fill="white" rx="1" />
-        <rect x="12" y="80" width="8" height="8" fill="black" rx="1" />
-        <!-- alignment pattern (center) -->
-        <rect x="44" y="44" width="12" height="12" fill="black" rx="1" />
-        <rect x="47" y="47" width="6" height="6" fill="white" rx="0.5" />
-        <rect x="48" y="48" width="4" height="4" fill="black" />
-        <!-- timing patterns (horizontal & vertical) -->
-        <rect x="30" y="46" width="2" height="2" fill="black" />
-        <rect x="34" y="46" width="2" height="2" fill="black" />
-        <rect x="38" y="46" width="2" height="2" fill="black" />
-        <rect x="42" y="46" width="2" height="2" fill="black" />
-        <rect x="50" y="46" width="2" height="2" fill="black" />
-        <rect x="54" y="46" width="2" height="2" fill="black" />
-        <rect x="58" y="46" width="2" height="2" fill="black" />
-        <rect x="62" y="46" width="2" height="2" fill="black" />
-        <rect x="66" y="46" width="2" height="2" fill="black" />
-        <rect x="46" y="30" width="2" height="2" fill="black" />
-        <rect x="46" y="34" width="2" height="2" fill="black" />
-        <rect x="46" y="38" width="2" height="2" fill="black" />
-        <rect x="46" y="42" width="2" height="2" fill="black" />
-        <rect x="46" y="50" width="2" height="2" fill="black" />
-        <rect x="46" y="54" width="2" height="2" fill="black" />
-        <rect x="46" y="58" width="2" height="2" fill="black" />
-        <rect x="46" y="62" width="2" height="2" fill="black" />
-        <rect x="46" y="66" width="2" height="2" fill="black" />
-        <!-- scattered data modules (realistic) -->
-        <rect x="30" y="8" width="4" height="4" fill="black" />
-        <rect x="38" y="8" width="4" height="4" fill="black" />
-        <rect x="52" y="8" width="4" height="4" fill="black" />
-        <rect x="60" y="8" width="4" height="4" fill="black" />
-        <rect x="8" y="30" width="4" height="4" fill="black" />
-        <rect x="18" y="30" width="2" height="2" fill="black" />
-        <rect x="30" y="30" width="4" height="4" fill="black" />
-        <rect x="58" y="30" width="4" height="4" fill="black" />
-        <rect x="68" y="30" width="4" height="4" fill="black" />
-        <rect x="30" y="60" width="4" height="4" fill="black" />
-        <rect x="38" y="60" width="4" height="4" fill="black" />
-        <rect x="52" y="60" width="4" height="4" fill="black" />
-        <rect x="68" y="60" width="4" height="4" fill="black" />
-        <rect x="8" y="68" width="4" height="4" fill="black" />
-        <rect x="18" y="68" width="4" height="4" fill="black" />
-        <rect x="30" y="68" width="4" height="4" fill="black" />
-        <rect x="54" y="68" width="4" height="4" fill="black" />
-        <rect x="62" y="68" width="4" height="4" fill="black" />
-        <rect x="60" y="80" width="4" height="4" fill="black" />
-        <rect x="70" y="80" width="4" height="4" fill="black" />
-        <rect x="80" y="80" width="4" height="4" fill="black" />
-        <rect x="88" y="80" width="4" height="4" fill="black" />
-        <rect x="30" y="88" width="4" height="4" fill="black" />
-        <rect x="40" y="88" width="4" height="4" fill="black" />
-        <rect x="52" y="88" width="4" height="4" fill="black" />
-        <rect x="74" y="36" width="2" height="2" fill="black" />
-        <rect x="82" y="36" width="2" height="2" fill="black" />
-        <rect x="90" y="36" width="2" height="2" fill="black" />
-        <rect x="74" y="44" width="2" height="2" fill="black" />
-        <rect x="82" y="44" width="2" height="2" fill="black" />
-        <rect x="90" y="44" width="2" height="2" fill="black" />
-        <rect x="74" y="52" width="4" height="4" fill="black" />
-        <rect x="84" y="52" width="2" height="2" fill="black" />
-        <rect x="92" y="52" width="2" height="2" fill="black" />
-        <rect x="74" y="60" width="2" height="2" fill="black" />
-        <rect x="80" y="60" width="2" height="2" fill="black" />
-        <rect x="88" y="60" width="2" height="2" fill="black" />
-        <rect x="92" y="60" width="4" height="4" fill="black" />
-        <rect x="10" y="48" width="4" height="4" fill="black" />
-        <rect x="20" y="48" width="4" height="4" fill="black" />
-        <rect x="28" y="56" width="4" height="4" fill="black" />
-        <rect x="10" y="58" width="4" height="4" fill="black" />
-        <rect x="20" y="58" width="2" height="2" fill="black" />
-        <rect x="28" y="78" width="4" height="4" fill="black" />
-        <rect x="36" y="78" width="4" height="4" fill="black" />
-        <rect x="10" y="88" width="2" height="2" fill="black" />
-        <rect x="18" y="88" width="4" height="4" fill="black" />
-        <rect x="60" y="14" width="4" height="4" fill="black" />
-        <rect x="80" y="14" width="4" height="4" fill="black" />
-        <rect x="14" y="14" width="4" height="4" fill="black" />
-      </svg>
-    </div>
-    <div class="qr-instruction">Scan the code with the <strong>Discord mobile app</strong></div>
-    <div class="qr-desc">to log in instantly.</div>
-  </div>
-
-  <!-- "Or sign in with a code" — exactly as the original "Of meld je aan met een code" -->
-  <div class="code-alternative">
-    <button class="code-link" onclick="return false;">Or sign in with a code →</button>
-  </div>
+  <!-- login with passkey button (exactly as requested) -->
+  <button class="passkey-btn" onclick="return false;">Log in with passkey</button>
 </div>
 
-<!-- simple script to prevent any form submission / navigation, keeping static replica -->
+<!-- simple script to block form submission and link navigation (purely static) -->
 <script>
   (function() {
-    // block all form submits (pure visual demo)
+    // block all form submits
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
       });
     });
-    // block every link or interactive button that could cause page jump
-    const allInteractives = document.querySelectorAll('a, .code-link, .login-btn');
-    allInteractives.forEach(el => {
-      el.addEventListener('click', (e) => {
+    // block navigation on all <a> links
+    const allLinks = document.querySelectorAll('a');
+    allLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
         e.preventDefault();
       });
     });
+    // passkey button does nothing (static replica)
+    const passkeyBtn = document.querySelector('.passkey-btn');
+    if (passkeyBtn) {
+      passkeyBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+      });
+    }
   })();
 </script>
 </body>
