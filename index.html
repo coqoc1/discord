@@ -1,254 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Discord · Log in with passkey</title>
-  <style>
-    /* ----- reset & base (same as original Dutch version) ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<title>Login</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #1e1f22;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-    body {
-      background: #1e1f22;           /* Discord dark background */
-      font-family: 'Whitney', 'Helvetica Neue', 'Segoe UI', 'gg sans', 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 1.5rem;
-    }
+.container {
+  background: #2b2d31;
+  padding: 40px;
+  border-radius: 10px;
+  display: flex;
+  gap: 40px;
+  width: 700px;
+  color: white;
+}
 
-    /* login card — exact Discord style */
-    .login-card {
-      max-width: 480px;
-      width: 100%;
-      background: #2b2d31;
-      border-radius: 1rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-      padding: 2rem 1.8rem 2.2rem 1.8rem;
-      transition: none;
-    }
+.left {
+  flex: 1;
+}
 
-    /* headings */
-    .welcome-title {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: white;
-      text-align: center;
-      letter-spacing: -0.3px;
-      margin-bottom: 0.5rem;
-    }
+.right {
+  width: 220px;
+  text-align: center;
+}
 
-    .welcome-sub {
-      text-align: center;
-      color: #b5bac1;
-      font-size: 0.95rem;
-      margin-bottom: 1.8rem;
-      font-weight: 400;
-    }
+h1 {
+  margin-bottom: 10px;
+}
 
-    /* form groups */
-    .input-group {
-      margin-bottom: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+p {
+  color: #b5bac1;
+  font-size: 14px;
+}
 
-    .input-group label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #dbdee2;
-    }
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+  background: #1e1f22;
+  color: white;
+}
 
-    .input-field {
-      background-color: #1e1f22;
-      border: 1px solid #3c3f45;
-      border-radius: 0.5rem;
-      padding: 0.75rem 1rem;
-      font-size: 1rem;
-      color: white;
-      transition: 0.15s ease;
-      outline: none;
-      font-family: inherit;
-      width: 100%;
-    }
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background: #5865f2;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .input-field:focus {
-      border-color: #5865f2;
-      box-shadow: 0 0 0 1px #5865f2;
-    }
+button:hover {
+  background: #4752c4;
+}
 
-    /* no placeholder text — exactly like the image */
-    .input-field::placeholder {
-      color: transparent;
-    }
+.link {
+  color: #00a8fc;
+  font-size: 13px;
+  cursor: pointer;
+}
 
-    /* forgot password link */
-    .forgot-row {
-      text-align: right;
-      margin-top: -0.25rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .forgot-link {
-      color: #00a8fc;
-      font-size: 0.8rem;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .forgot-link:hover {
-      text-decoration: underline;
-      color: #40b6ff;
-    }
-
-    /* primary login button */
-    .login-btn {
-      background-color: #5865f2;
-      border: none;
-      width: 100%;
-      padding: 0.8rem;
-      border-radius: 0.5rem;
-      font-weight: 500;
-      font-size: 1rem;
-      color: white;
-      font-family: inherit;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-bottom: 1.5rem;
-    }
-
-    .login-btn:hover {
-      background-color: #4752c4;
-    }
-
-    /* "OR" divider — exactly as in the screenshot */
-    .divider {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .divider-line {
-      flex: 1;
-      height: 1px;
-      background-color: #3c3f45;
-    }
-
-    .divider-text {
-      color: #b5bac1;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-
-    /* passkey button — secondary style (border, dark background) */
-    .passkey-btn {
-      background-color: transparent;
-      border: 1px solid #3c3f45;
-      width: 100%;
-      padding: 0.8rem;
-      border-radius: 0.5rem;
-      font-weight: 500;
-      font-size: 1rem;
-      color: white;
-      font-family: inherit;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .passkey-btn:hover {
-      background-color: #2b2d31;
-      border-color: #5865f2;
-    }
-
-    /* mobile optimization */
-    @media (max-width: 500px) {
-      .login-card {
-        padding: 1.6rem;
-      }
-      .welcome-title {
-        font-size: 1.6rem;
-      }
-    }
-
-    button, a {
-      cursor: pointer;
-    }
-  </style>
+.qr {
+  width: 180px;
+  height: 180px;
+  background: white;
+  margin: 10px auto;
+}
+</style>
 </head>
+
 <body>
-<div class="login-card">
-  <!-- exact titles as in the original, but in English -->
-  <h1 class="welcome-title">Welcome back!</h1>
-  <p class="welcome-sub">We're very happy to see you again!</p>
 
-  <!-- login form (no action, exact replica) -->
-  <form action="#" method="post">
-    <div class="input-group">
-      <label for="emailPhone">Email or phone number</label>
-      <input type="text" id="emailPhone" class="input-field" value="" autocomplete="off">
-    </div>
-    <div class="input-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" class="input-field" value="" autocomplete="off">
-    </div>
-    <div class="forgot-row">
-      <a href="#" class="forgot-link">Forgot password?</a>
-    </div>
-    <button type="submit" class="login-btn">Log in</button>
-  </form>
+<div class="container">
+  <div class="left">
+    <h1>Welcome back!</h1>
+    <p>We're happy to see you again!</p>
 
-  <!-- "OR" divider -->
-  <div class="divider">
-    <div class="divider-line"></div>
-    <span class="divider-text">OR</span>
-    <div class="divider-line"></div>
+    <label>Email or Phone</label>
+    <input type="text">
+
+    <label>Password</label>
+    <input type="password">
+
+    <div class="link">Forgot your password?</div>
+
+    <button>Log In</button>
+
+    <p>Need an account? <span class="link">Register</span></p>
   </div>
 
-  <!-- login with passkey button (exactly as requested) -->
-  <button class="passkey-btn" onclick="return false;">Log in with passkey</button>
+  <div class="right">
+    <div class="qr"></div>
+    <h3>Log in with QR Code</h3>
+    <p>Scan this with your mobile app to log in instantly.</p>
+  </div>
 </div>
 
-<!-- simple script to block form submission and link navigation (purely static) -->
-<script>
-  (function() {
-    // block all form submits
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-      });
-    });
-    // block navigation on all <a> links
-    const allLinks = document.querySelectorAll('a');
-    allLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-      });
-    });
-    // passkey button does nothing (static replica)
-    const passkeyBtn = document.querySelector('.passkey-btn');
-    if (passkeyBtn) {
-      passkeyBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-      });
-    }
-  })();
-</script>
 </body>
 </html>
